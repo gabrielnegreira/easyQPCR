@@ -1,15 +1,22 @@
-# aneuQPCR
-![version](https://img.shields.io/badge/version-1.0.0-blue)
+# easyQPCR
 
-aneuQPCR is a collection of R functions developed for the quantification of DNA using qPCR data. This project can be helpful for anyone who needs to:
+easyQPCR is a collection of R functions developed for the automated determination of amplification efficiencies in qPCR data, allowing precise, efficiency-corrected, estimation of original target DNA amounts. Efficiency is determine for each reaction based exclusively on the amplification kynetics and therefore do not require standard curves or any additional reactions that estimate primer efficiency. All you need is the Fluorescence X Cycle data of your reaction! 
 
-- Determine PCR amplification efficiency on a per-reaction basis and without the need for standard curves.
-
-- Estimate original DNA quantification in each reaction without relying on Ct values and taking amplification efficiency into account. 
-
-Although originally developed with aneuploidy detection in mind, the functions are applicable to any qPCR dataset. They can also be useful in other contexts where precise quantification matters, such as gene expression analysis, copy number variation studies, and general molecular diagnostics.
+# How it works
+Taken a relationship between PCR cycle (explanatory variable - x-axis) and fluorescence (response variable - y-axis), easyQPCR fits an LL5 model to the amplification curve which is used to determine the linear amplification phase in a log2 space. Then a linear model is fit in the cycles corresponding to this phase, with the slope and intercept of this model respectively corresponding to the amplification efficiency and the theoretical fluorescence at cycle 0 of the reaction in a log2 space. Exponentiating these coefficients back to the standard scale returns, respectively, the molecule replication rate (i.e., efficiency: 2 = 100%, 1 = 0%) and the extrapolated original DNA amount, expressed in fluorescence units.
 
 Here is a graphical representation of how it works:
+
+This is based on the method described in:
+
+- Christian Ramakers, Jan M Ruijter, Ronald H.Lekanne Deprez, Antoon F.M Moorman,
+*Assumption-free analysis of quantitative real-time polymerase chain reaction (PCR) data*,
+Neuroscience Letters,
+Volume 339, Issue 1,
+2003,
+Pages 62-66,
+ISSN 0304-3940,
+[https://doi.org/10.1016/S0304-3940(02)01423-4](https://www.sciencedirect.com/science/article/pii/S0304394002014234)
 
 <p align="center">
   <img src="figures/animation.gif" alt="LL5 model workflow" height="300" width="400"/>
@@ -20,15 +27,15 @@ Here is a graphical representation of how it works:
 2) Extract the zip file anywhere you prefer.
 3) Alternatively, you can clone the repository via terminal if you have Git installed:
 ```sh
-git clone git@github.com:gabrielnegreira/aneuQPCR.git
+git clone git@github.com:gabrielnegreira/easyQPCR.git
 ```
 4) In R, set working directory to the location of the extracted folder:
 ```r
-setwd("path/to/aneuQPCR")
+setwd("path/to/easyQPCR")
 ```
-5) Source the aneuQPCR functions
+5) Source the easyQPCR functions
  ```r
-source("aneuQPCR_functions.R")
+source("easyQPCR_functions.R")
 ```
 # Usage
 The estimation of PCR amplification efficiency and extrapolation of initial DNA amounts are done with the `fit_model_LL5()` function. This function expects a `qPCRobj` object, which can be created with `create_qPCRobj()`. As input, you only need a matrix where columns are PCR reactions (wells in a PCR plate), rows are the cycle number, and values are the fluorescence signal captured in each cycle. An example input file is provided as `example.tsv`. 
@@ -142,7 +149,7 @@ Where:
 Both approaches should yield similar results. Note that option 1 does not require the determination of Ct values. 
 
 # Acknowledgements
-The method for determination of amplification efficiency and inference of initial amount of target DNA is based on approach described in:
+As mentioned before, the method for determination of amplification efficiency and inference of initial amount of target DNA is based on approach described in:
 
 - Christian Ramakers, Jan M Ruijter, Ronald H.Lekanne Deprez, Antoon F.M Moorman,
 *Assumption-free analysis of quantitative real-time polymerase chain reaction (PCR) data*,
@@ -161,7 +168,7 @@ ISSN 0304-3940,
 
 If you have questions, suggestions, or want to contribute, feel free to:
 
-- Open an [issue](https://github.com/gabrielnegreira/aneuQPCR/issues)  
+- Open an [issue](https://github.com/gabrielnegreira/easyQPCR/issues)  
 - Submit a pull request  
 - Contact me via [GitHub](https://github.com/gabrielnegreira)  
 - Email me at: **gnegreira_github@proton.me**
