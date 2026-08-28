@@ -3,11 +3,16 @@
 easyQPCR is a collection of R functions developed for the automated determination of amplification efficiencies in qPCR data, allowing precise, efficiency-corrected, estimation of original target DNA amounts without relying on Ct values. Efficiency is determined for each reaction based exclusively on the amplification kynetics and therefore do not require standard curves or any additional reactions that estimate primer efficiency. **All you need is the Fluorescence X Cycle data of your reaction**!
 
 # How it works
+
 Taken a relationship between PCR cycle (explanatory variable - x-axis) and fluorescence (response variable - y-axis), easyQPCR fits an LL5 model to the amplification curve which is used to determine the linear amplification phase in a log2 space. Then a linear model is fit in the cycles corresponding to this phase, with the slope and intercept of this model respectively corresponding to the amplification efficiency and the theoretical fluorescence at cycle 0 of the reaction in a log2 space. Exponentiating these coefficients back to the standard scale returns, respectively, the molecule replication rate (i.e., efficiency: 2 = 100%, 1 = 0%) and the extrapolated original DNA amount, expressed in fluorescence units.
 
 Here is a graphical representation of how it works:
 
-This is based on the method described in:
+<p align="center">
+  <img src="figures/animation.gif" alt="LL5 model workflow" height="300" width="400"/>
+</p>
+
+This builds on the method described in:
 
 - Christian Ramakers, Jan M Ruijter, Ronald H.Lekanne Deprez, Antoon F.M Moorman,
 *Assumption-free analysis of quantitative real-time polymerase chain reaction (PCR) data*,
@@ -17,10 +22,6 @@ Volume 339, Issue 1,
 Pages 62-66,
 ISSN 0304-3940,
 [https://doi.org/10.1016/S0304-3940(02)01423-4](https://www.sciencedirect.com/science/article/pii/S0304394002014234)
-
-<p align="center">
-  <img src="figures/animation.gif" alt="LL5 model workflow" height="300" width="400"/>
-</p>
 
 # Installation
 1) Download the repository by clicking the green `<> Code` buttom and `download Zip`.
