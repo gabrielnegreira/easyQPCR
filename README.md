@@ -1,10 +1,10 @@
-# easyQPCR
+# fixQPCR
 
-easyQPCR is a collection of R functions developed for the automated determination of amplification efficiencies in qPCR data, allowing precise, efficiency-corrected, estimation of original target DNA amounts without relying on Ct values. Efficiency is determined for each reaction based exclusively on the amplification kynetics and therefore do not require standard curves or any additional reactions that estimate primer efficiency. **All you need is the Fluorescence X Cycle data of your reaction**!
+fixQPCR is a collection of R functions developed for the automated determination of amplification efficiencies in qPCR data, allowing precise, efficiency-corrected, estimation of original target DNA amounts without relying on Ct values. Efficiency is determined for each reaction based exclusively on the amplification kynetics and therefore do not require standard curves or any additional reactions that estimate primer efficiency. **All you need is the Fluorescence X Cycle data of your reaction**!
 
 # How it works
 
-Taken a relationship between PCR cycle (explanatory variable - x-axis) and fluorescence (response variable - y-axis), easyQPCR fits an LL5 model to the amplification curve which is used to determine the linear amplification phase in a log2 space. Then a linear model is fit in the cycles corresponding to this phase, with the slope and intercept of this model respectively corresponding to the amplification efficiency and the theoretical fluorescence at cycle 0 of the reaction in a log2 space. Exponentiating these coefficients back to the standard scale returns, respectively, the molecule replication rate (i.e., efficiency: 2 = 100%, 1 = 0%) and the extrapolated original DNA amount, expressed in fluorescence units.
+Taken a relationship between PCR cycle (explanatory variable - x-axis) and fluorescence (response variable - y-axis), fixQPCR fits an LL5 model to the amplification curve which is used to determine the linear amplification phase in a log2 space. Then a linear model is fit in the cycles corresponding to this phase, with the slope and intercept of this model respectively corresponding to the amplification efficiency and the theoretical fluorescence at cycle 0 of the reaction in a log2 space. Exponentiating these coefficients back to the standard scale returns, respectively, the molecule replication rate (i.e., efficiency: 2 = 100%, 1 = 0%) and the extrapolated original DNA amount, expressed in fluorescence units.
 
 Here is a graphical representation of how it works:
 
@@ -28,15 +28,15 @@ ISSN 0304-3940,
 2) Extract the zip file anywhere you prefer.
 3) Alternatively, you can clone the repository via terminal if you have Git installed:
 ```sh
-git clone git@github.com:gabrielnegreira/easyQPCR.git
+git clone git@github.com:gabrielnegreira/fixQPCR.git
 ```
 4) In R, set working directory to the location of the extracted folder:
 ```r
-setwd("path/to/easyQPCR")
+setwd("path/to/fixQPCR")
 ```
-5) Source the easyQPCR functions
+5) Source the fixQPCR functions
  ```r
-source("easyQPCR_functions.R")
+source("fixQPCR_functions.R")
 ```
 # Usage
 The estimation of PCR amplification efficiency and extrapolation of initial DNA amounts are done with the `fit_model_LL5()` function. This function expects a `qPCRobj` object, which can be created with `create_qPCRobj()`. As input, you only need a matrix where columns are PCR reactions (wells in a PCR plate), rows are the cycle number, and values are the fluorescence signal captured in each cycle. An example input file is provided as `example.tsv`. 
@@ -169,7 +169,7 @@ ISSN 0304-3940,
 
 If you have questions, suggestions, or want to contribute, feel free to:
 
-- Open an [issue](https://github.com/gabrielnegreira/easyQPCR/issues)  
+- Open an [issue](https://github.com/gabrielnegreira/fixQPCR/issues)  
 - Submit a pull request  
 - Contact me via [GitHub](https://github.com/gabrielnegreira)  
 - Email me at: **gnegreira_github@proton.me**
